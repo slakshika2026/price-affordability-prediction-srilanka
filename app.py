@@ -88,7 +88,7 @@ with col2:
     default_idx  = all_units.index(default_unit) if default_unit in all_units else 0
     unit = st.selectbox("⚖️ Unit", all_units, index=default_idx)
 
-    year  = st.slider("📅 Year", 2004, 2030, 2025)
+    year = 2026  # Predicting for 2026 only
     month = st.selectbox(
         "📅 Month", list(range(1, 13)),
         format_func=lambda m: pd.Timestamp(2024, m, 1).strftime('%B')
@@ -134,19 +134,9 @@ if st.button("🔍 Predict Price", use_container_width=True, type="primary"):
         else:
             extra = ""
 
-        # Confidence based on how far ahead
-        if year <= 2025:
-            confidence      = "🟢 High"
-            confidence_note = "Within dataset range."
-        elif year == 2026:
-            confidence      = "� Medium"
-            confidence_note = "1 year ahead — reasonable estimate."
-        elif year == 2027:
-            confidence      = "🟠 Low-Medium"
-            confidence_note = "2 years ahead — treat as estimate only."
-        else:
-            confidence      = "🔴 Low"
-            confidence_note = f"{year-2025} years beyond dataset — indicative only."
+        # Confidence for 2026 prediction
+        confidence      = "🟡 Medium"
+        confidence_note = "1 year ahead — reasonable estimate based on 2004-2025 data."
 
         st.markdown(f"""
         <div class="predict-box">
@@ -179,4 +169,4 @@ if st.button("🔍 Predict Price", use_container_width=True, type="primary"):
         st.error(f"⚠️ Could not predict. Try another combination. ({e})")
 
 st.markdown("---")
-st.caption("Data: World Food Programme — VAM Food Security Analysis, Sri Lanka (2004–2025)")
+st.caption("Predicting 2026 prices only. Data: World Food Programme — VAM Food Security Analysis, Sri Lanka (2004–2025)")
